@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="admin.there">
+
+	<select id="selectThereGroups" resultType="adminThereGroupVO">
+		SELECT g.id, g.name, g.update_dt, COUNT(t.group_id) there_count
+		  FROM tbl_there_group g, tbl_there t
+		 WHERE g.id = t.group_id
+		 GROUP BY t.group_id
+		 ORDER BY group_order
+	</select>
+
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
