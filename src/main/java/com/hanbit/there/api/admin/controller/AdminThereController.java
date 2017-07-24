@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -64,6 +65,31 @@ public class AdminThereController {
 
 		Map result = new HashMap();
 		result.put("ok", true);
+		
+		return result;
+	}
+	
+	@PostMapping("/group/add")
+	public Map addThereGroup(@RequestParam("id") String id,
+			@RequestParam("name") String name) {
+		AdminThereGroupVO groupVO = new AdminThereGroupVO();
+		groupVO.setId(id);
+		groupVO.setName(name);
+		
+		adminThereService.addThereGroup(groupVO);
+		
+		Map result = new HashMap();
+		result.put("ok", true);
+		
+		return result;
+	}
+	
+	@RequestMapping(value="/group/{id}", method=RequestMethod.OPTIONS)
+	public Map hasThereGroupId(@PathVariable("id") String id) {
+		boolean exists = adminThereService.hasThereGroupId(id);
+		
+		Map result = new HashMap();
+		result.put("exists", exists);
 		
 		return result;
 	}

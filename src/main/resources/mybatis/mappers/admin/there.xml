@@ -6,8 +6,8 @@
 
 	<select id="selectThereGroups" resultType="adminThereGroupVO">
 		SELECT g.id, g.name, g.update_dt, COUNT(t.group_id) there_count
-		  FROM tbl_there_group g, tbl_there t
-		 WHERE g.id = t.group_id
+		  FROM tbl_there_group g LEFT JOIN tbl_there t
+		 	ON g.id = t.group_id
 		 GROUP BY t.group_id
 		 ORDER BY group_order
 	</select>
@@ -38,6 +38,20 @@
 		  FROM tbl_there_group
 		 WHERE id = #{id}
 	</delete>
+	
+	<insert id="insertThereGroup" parameterType="adminThereGroupVO">
+		INSERT INTO tbl_there_group
+			(id, name, group_order, update_dt)
+		SELECT #{id}, #{name}, MAX(group_order) + 1, NOW()
+		  FROM tbl_there_group
+	</insert>
+	
+	<select id="countThereGroupId" parameterType="string"
+		resultType="int">
+		SELECT COUNT(id)
+		  FROM tbl_there_group
+		 WHERE id = #{id}
+	</select>
 
 </mapper>
 

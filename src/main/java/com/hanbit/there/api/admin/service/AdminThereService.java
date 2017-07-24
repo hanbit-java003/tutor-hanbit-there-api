@@ -45,6 +45,14 @@ public class AdminThereService {
 		menuService.invalidateCache();
 	}
 	
+	public void addThereGroup(AdminThereGroupVO groupVO) {
+		adminThereDAO.insertThereGroup(groupVO);
+	}
+	
+	public boolean hasThereGroupId(String id) {
+		return adminThereDAO.countThereGroupId(id) > 0;
+	}
+	
 }
 
 

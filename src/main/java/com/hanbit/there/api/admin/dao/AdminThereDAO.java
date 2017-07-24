@@ -40,6 +40,14 @@ public class AdminThereDAO {
 		return sqlSession.delete("admin.there.deleteThereGroup", id);
 	}
 	
+	public int insertThereGroup(AdminThereGroupVO groupVO) {
+		return sqlSession.insert("admin.there.insertThereGroup", groupVO);
+	}
+	
+	public int countThereGroupId(String id) {
+		return sqlSession.selectOne("admin.there.countThereGroupId", id);
+	}
+	
 }
 
 
