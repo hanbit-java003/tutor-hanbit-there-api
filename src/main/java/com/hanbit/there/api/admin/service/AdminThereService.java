@@ -31,6 +31,20 @@ public class AdminThereService {
 		menuService.invalidateCache();
 	}
 	
+	public AdminThereGroupVO getThereGroup(String id) {
+		return adminThereDAO.selectThereGroup(id);
+	}
+	
+	public void modifyThereGroup(AdminThereGroupVO groupVO) {
+		adminThereDAO.updateThereGroup(groupVO);
+		menuService.invalidateCache();
+	}
+	
+	public void removeThereGroup(String id) {
+		adminThereDAO.deleteThereGroup(id);
+		menuService.invalidateCache();
+	}
+	
 }
 
 

@@ -28,6 +28,18 @@ public class AdminThereDAO {
 		return sqlSession.update("admin.there.updateThereGroupOrder", param);
 	}
 	
+	public AdminThereGroupVO selectThereGroup(String id) {
+		return sqlSession.selectOne("admin.there.selectThereGroup", id);
+	}
+
+	public int updateThereGroup(AdminThereGroupVO groupVO) {
+		return sqlSession.update("admin.there.updateThereGroup", groupVO);
+	}
+	
+	public int deleteThereGroup(String id) {
+		return sqlSession.delete("admin.there.deleteThereGroup", id);
+	}
+	
 }
 
 

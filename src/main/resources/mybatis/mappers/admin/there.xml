@@ -18,6 +18,26 @@
 		   	   update_dt = NOW()
 		 WHERE id = #{id}
 	</update>
+	
+	<select id="selectThereGroup" parameterType="string"
+		resultType="adminThereGroupVO">
+		SELECT id, name
+		  FROM tbl_there_group
+		 WHERE id = #{id}
+	</select>
+	
+	<update id="updateThereGroup" parameterType="adminThereGroupVO">
+		UPDATE tbl_there_group
+		   SET name = #{name},
+		   	   update_dt = NOW()
+		 WHERE id = #{id}	
+	</update>
+	
+	<delete id="deleteThereGroup" parameterType="string">
+		DELETE
+		  FROM tbl_there_group
+		 WHERE id = #{id}
+	</delete>
 
 </mapper>
 
