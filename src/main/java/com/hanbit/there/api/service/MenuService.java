@@ -76,4 +76,8 @@ public class MenuService {
 		return menuCache;
 	}
 	
+	public void invalidateCache() {
+		menuCache = null;
+	}
+	
 }
