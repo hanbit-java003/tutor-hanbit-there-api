@@ -11,6 +11,13 @@
 		 GROUP BY t.group_id
 		 ORDER BY group_order
 	</select>
+	
+	<update id="updateThereGroupOrder" parameterType="map">
+		UPDATE tbl_there_group
+		   SET group_order = group_order + (${order}),
+		   	   update_dt = NOW()
+		 WHERE id = #{id}
+	</update>
 
 </mapper>
 
