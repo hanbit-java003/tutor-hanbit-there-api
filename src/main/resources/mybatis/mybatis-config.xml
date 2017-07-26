@@ -13,10 +13,11 @@
   	<typeAlias alias="locationVO" type="com.hanbit.there.api.vo.LocationVO"/>
   	<typeAlias alias="infoVO" type="com.hanbit.there.api.vo.InfoVO"/>
   	<typeAlias alias="trafficVO" type="com.hanbit.there.api.vo.TrafficVO"/>
-  	
+
   	<typeAlias alias="adminThereGroupVO" type="com.hanbit.there.api.admin.vo.AdminThereGroupVO"/>
+  	<typeAlias alias="adminThereVO" type="com.hanbit.there.api.admin.vo.AdminThereVO"/>
   </typeAliases>
-  
+
 </configuration>
 
 
