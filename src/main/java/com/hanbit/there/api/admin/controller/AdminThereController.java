@@ -102,6 +102,16 @@ public class AdminThereController {
 		return adminThereService.listTheres(groupId);
 	}
 
+	@RequestMapping(value="/{id}", method=RequestMethod.OPTIONS)
+	public Map hasThereId(@PathVariable("id") String id) {
+		boolean exists = adminThereService.hasThereId(id);
+
+		Map result = new HashMap();
+		result.put("exists", exists);
+
+		return result;
+	}
+
 }
 
 

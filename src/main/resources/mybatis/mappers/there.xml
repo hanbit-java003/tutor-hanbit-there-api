@@ -6,18 +6,18 @@
 
 	<select id="selectThere"
 		parameterType="string" resultType="thereVO">
-		SELECT name, name_en, background, summary, timezone
+		SELECT id, group_id, name, name_en, background, summary, timezone
 		  FROM tbl_there
 		 WHERE id = #{id}
 	</select>
-	
+
 	<select id="selectLocation"
 		parameterType="string" resultType="locationVO">
 		SELECT lat, lng
 		  FROM tbl_location
 		 WHERE id = #{id}
 	</select>
-	
+
 	<select id="selectInfos"
 		parameterType="string" resultType="infoVO">
 		SELECT title, value

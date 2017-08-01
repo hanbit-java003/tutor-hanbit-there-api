@@ -68,6 +68,12 @@
 		 ORDER BY name
 	</select>
 
+	<select id="countThereId" parameterType="string" resultType="int">
+		SELECT COUNT(id)
+		  FROM tbl_there
+		 WHERE id = #{id}
+	</select>
+
 </mapper>
 
 

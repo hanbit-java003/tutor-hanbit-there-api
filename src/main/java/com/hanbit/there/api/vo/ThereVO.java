@@ -4,16 +4,18 @@ import java.util.List;
 
 public class ThereVO {
 
+	private String id;
+	private String groupId;
 	private String name;
 	private String nameEn;
 	private String background;
 	private String summary;
 	private String timezone;
-	
+
 	private List<InfoVO> areaInfo;
 	private LocationVO location;
 	private List<TrafficVO> traffics;
-	
+
 	public String getName() {
 		return name;
 	}
@@ -62,5 +64,17 @@ public class ThereVO {
 	public void setTraffics(List<TrafficVO> traffics) {
 		this.traffics = traffics;
 	}
-	
+	public String getId() {
+		return id;
+	}
+	public void setId(String id) {
+		this.id = id;
+	}
+	public String getGroupId() {
+		return groupId;
+	}
+	public void setGroupId(String groupId) {
+		this.groupId = groupId;
+	}
+
 }

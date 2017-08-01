@@ -53,6 +53,10 @@ public class AdminThereDAO {
 		return sqlSession.selectList("admin.there.selectTheres", groupId);
 	}
 
+	public int countThereId(String id) {
+		return sqlSession.selectOne("admin.there.countThereId", id);
+	}
+
 }
 
 

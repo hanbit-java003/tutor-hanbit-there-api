@@ -58,6 +58,10 @@ public class AdminThereService {
 		return adminThereDAO.selectTheres(groupId);
 	}
 
+	public boolean hasThereId(String id) {
+		return adminThereDAO.countThereId(id) > 0;
+	}
+
 }
 
 
