@@ -13,10 +13,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hanbit.there.api.admin.service.AdminThereService;
 import com.hanbit.there.api.admin.vo.AdminThereGroupVO;
 import com.hanbit.there.api.admin.vo.AdminThereVO;
+import com.hanbit.there.api.vo.ThereVO;
 
 @RestController
 @RequestMapping("/api/admin/there")
@@ -24,6 +27,8 @@ public class AdminThereController {
 
 	@Autowired
 	private AdminThereService adminThereService;
+
+	private ObjectMapper mapper = new ObjectMapper();
 
 	@RequestMapping("/groups")
 	public List<AdminThereGroupVO> listThereGroups() {
@@ -108,6 +113,19 @@ public class AdminThereController {
 
 		Map result = new HashMap();
 		result.put("exists", exists);
+
+		return result;
+	}
+
+	@PostMapping("/{id}")
+	public Map modifyThere(@PathVariable("id") String id,
+			MultipartHttpServletRequest request) throws Exception {
+
+		String json = request.getParameter("json");
+		ThereVO there = mapper.readValue(json, ThereVO.class);
+
+		Map result = new HashMap();
+		result.put("ok", true);
 
 		return result;
 	}
