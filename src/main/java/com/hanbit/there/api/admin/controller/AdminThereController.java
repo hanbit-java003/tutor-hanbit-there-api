@@ -136,10 +136,11 @@ public class AdminThereController {
 		if (background != null) {
 			FileVO fileVO = new FileVO();
 			fileVO.setFileId("there-" + there.getId());
+
 			String fileExt = FilenameUtils.getExtension(background.getOriginalFilename());
 			String fileName = there.getId() + "." + fileExt;
 
-			fileVO.setFilePath("/hanbit/webpack/hanbit-there/src/img/there/" + fileName);
+			fileVO.setFilePath("/hanbit/webpack/hanbit-there/src/img/theres/" + fileName);
 			fileVO.setFileName(fileName);
 			fileVO.setContentType(background.getContentType());
 			fileVO.setContentLength(background.getSize());

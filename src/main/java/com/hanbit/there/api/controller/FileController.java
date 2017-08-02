@@ -34,7 +34,7 @@ public class FileController {
 
 		response.setContentType(contentType);
 		response.setContentLengthLong(contentLength);
-		response.setHeader("Content-Disposition", "attachment; filename=" + fileName);
+		response.setHeader("Content-Disposition", "filename=" + fileName);
 
 		OutputStream outputStream = response.getOutputStream();
 
