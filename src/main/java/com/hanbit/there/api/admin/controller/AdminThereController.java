@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,12 +14,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hanbit.there.api.admin.service.AdminThereService;
 import com.hanbit.there.api.admin.vo.AdminThereGroupVO;
 import com.hanbit.there.api.admin.vo.AdminThereVO;
+import com.hanbit.there.api.service.FileService;
+import com.hanbit.there.api.vo.FileVO;
 import com.hanbit.there.api.vo.ThereVO;
 
 @RestController
@@ -27,6 +31,9 @@ public class AdminThereController {
 
 	@Autowired
 	private AdminThereService adminThereService;
+
+	@Autowired
+	private FileService fileService;
 
 	private ObjectMapper mapper = new ObjectMapper();
 
@@ -123,6 +130,24 @@ public class AdminThereController {
 
 		String json = request.getParameter("json");
 		ThereVO there = mapper.readValue(json, ThereVO.class);
+
+		MultipartFile background = request.getFile("background");
+
+		if (background != null) {
+			FileVO fileVO = new FileVO();
+			fileVO.setFileId("there-" + there.getId());
+			String fileExt = FilenameUtils.getExtension(background.getOriginalFilename());
+			String fileName = there.getId() + "." + fileExt;
+
+			fileVO.setFilePath("/hanbit/webpack/hanbit-there/src/img/there/" + fileName);
+			fileVO.setFileName(fileName);
+			fileVO.setContentType(background.getContentType());
+			fileVO.setContentLength(background.getSize());
+
+			fileService.modifyFile(fileVO, background.getInputStream());
+
+			there.setBackground("/api/file/" + fileVO.getFileId());
+		}
 
 		Map result = new HashMap();
 		result.put("ok", true);
