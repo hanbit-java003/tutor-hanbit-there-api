@@ -63,7 +63,7 @@ public class AdminThereDAO {
 	}
 
 	public int replaceLocation(ThereVO thereVO) {
-		return sqlSession.update("admin.there.repalceLocation", thereVO);
+		return sqlSession.update("admin.there.replaceLocation", thereVO);
 	}
 
 	public int deleteInfos(String id) {
