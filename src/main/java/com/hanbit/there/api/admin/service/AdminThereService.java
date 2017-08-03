@@ -80,7 +80,7 @@ public class AdminThereService {
 		}
 
 		adminThereDAO.updateThere(thereVO);
-		adminThereDAO.updateLocation(thereVO);
+		adminThereDAO.replaceLocation(thereVO);
 		adminThereDAO.deleteInfos(thereVO.getId());
 		adminThereDAO.insertInfos(thereVO);
 		adminThereDAO.deleteTraffics(thereVO.getId());

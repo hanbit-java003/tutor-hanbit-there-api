@@ -84,11 +84,11 @@
 		 WHERE id = #{id}
 	</update>
 
-	<update id="updateLocation" parameterType="thereVO">
-		UPDATE tbl_location
-		   SET lat = #{location.lat},
-		       lng = #{location.lng}
-		 WHERE id = #{id}
+	<update id="replaceLocation" parameterType="thereVO">
+		REPLACE INTO tbl_location
+			(id, lat, lng)
+		VALUES
+			(#{id}, #{location.lat}, #{location.lng})
 	</update>
 
 	<delete id="deleteInfos" parameterType="string">
