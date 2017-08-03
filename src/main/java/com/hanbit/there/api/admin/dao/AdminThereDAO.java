@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import com.hanbit.there.api.admin.vo.AdminThereGroupVO;
 import com.hanbit.there.api.admin.vo.AdminThereVO;
+import com.hanbit.there.api.vo.ThereVO;
 
 @Repository
 public class AdminThereDAO {
@@ -55,6 +56,30 @@ public class AdminThereDAO {
 
 	public int countThereId(String id) {
 		return sqlSession.selectOne("admin.there.countThereId", id);
+	}
+
+	public int updateThere(ThereVO thereVO) {
+		return sqlSession.update("admin.there.updateThere", thereVO);
+	}
+
+	public int updateLocation(ThereVO thereVO) {
+		return sqlSession.update("admin.there.updateLocation", thereVO);
+	}
+
+	public int deleteInfos(String id) {
+		return sqlSession.delete("admin.there.deleteInfos", id);
+	}
+
+	public int insertInfos(ThereVO thereVO) {
+		return sqlSession.insert("admin.there.insertInfos", thereVO);
+	}
+
+	public int deleteTraffics(String id) {
+		return sqlSession.delete("admin.there.deleteTraffics", id);
+	}
+
+	public int insertTraffics(ThereVO thereVO) {
+		return sqlSession.insert("admin.there.insertTraffics", thereVO);
 	}
 
 }

@@ -133,22 +133,7 @@ public class AdminThereController {
 
 		MultipartFile background = request.getFile("background");
 
-		if (background != null) {
-			FileVO fileVO = new FileVO();
-			fileVO.setFileId("there-" + there.getId());
-
-			String fileExt = FilenameUtils.getExtension(background.getOriginalFilename());
-			String fileName = there.getId() + "." + fileExt;
-
-			fileVO.setFilePath("/hanbit/webpack/hanbit-there/src/img/theres/" + fileName);
-			fileVO.setFileName(fileName);
-			fileVO.setContentType(background.getContentType());
-			fileVO.setContentLength(background.getSize());
-
-			fileService.modifyFile(fileVO, background.getInputStream());
-
-			there.setBackground("/api/file/" + fileVO.getFileId());
-		}
+		adminThereService.modifyThere(there, background);
 
 		Map result = new HashMap();
 		result.put("ok", true);

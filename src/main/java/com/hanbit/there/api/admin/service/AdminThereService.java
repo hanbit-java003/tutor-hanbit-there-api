@@ -1,15 +1,21 @@
 package com.hanbit.there.api.admin.service;
 
+import java.io.IOException;
 import java.util.List;
 
+import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.hanbit.there.api.admin.dao.AdminThereDAO;
 import com.hanbit.there.api.admin.vo.AdminThereGroupVO;
 import com.hanbit.there.api.admin.vo.AdminThereVO;
+import com.hanbit.there.api.service.FileService;
 import com.hanbit.there.api.service.MenuService;
+import com.hanbit.there.api.vo.FileVO;
+import com.hanbit.there.api.vo.ThereVO;
 
 @Service
 public class AdminThereService {
@@ -19,6 +25,9 @@ public class AdminThereService {
 
 	@Autowired
 	private AdminThereDAO adminThereDAO;
+
+	@Autowired
+	private FileService fileService;
 
 	public List<AdminThereGroupVO> listThereGroups() {
 		return adminThereDAO.selectThereGroups();
@@ -60,6 +69,42 @@ public class AdminThereService {
 
 	public boolean hasThereId(String id) {
 		return adminThereDAO.countThereId(id) > 0;
+	}
+
+	@Transactional
+	public void modifyThere(ThereVO thereVO, MultipartFile background) {
+		String backgoundFileId = "there-" + thereVO.getId();
+
+		if (background != null) {
+			thereVO.setBackground("/api/file/" + backgoundFileId);
+		}
+
+		adminThereDAO.updateThere(thereVO);
+		adminThereDAO.updateLocation(thereVO);
+		adminThereDAO.deleteInfos(thereVO.getId());
+		adminThereDAO.insertInfos(thereVO);
+		adminThereDAO.deleteTraffics(thereVO.getId());
+		adminThereDAO.insertTraffics(thereVO);
+
+		if (background != null) {
+			FileVO fileVO = new FileVO();
+			fileVO.setFileId(backgoundFileId);
+
+			String fileExt = FilenameUtils.getExtension(background.getOriginalFilename());
+			String fileName = thereVO.getId() + "." + fileExt;
+
+			fileVO.setFilePath("/hanbit/webpack/hanbit-there/src/img/theres/" + fileName);
+			fileVO.setFileName(fileName);
+			fileVO.setContentType(background.getContentType());
+			fileVO.setContentLength(background.getSize());
+
+			try {
+				fileService.modifyFile(fileVO, background.getInputStream());
+			}
+			catch (IOException e) {
+				throw new RuntimeException(e);
+			}
+		}
 	}
 
 }
