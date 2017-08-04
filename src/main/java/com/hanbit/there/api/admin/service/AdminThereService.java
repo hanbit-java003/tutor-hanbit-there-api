@@ -82,9 +82,13 @@ public class AdminThereService {
 		adminThereDAO.updateThere(thereVO);
 		adminThereDAO.replaceLocation(thereVO);
 		adminThereDAO.deleteInfos(thereVO.getId());
-		adminThereDAO.insertInfos(thereVO);
+		if (thereVO.getAreaInfo().size() > 0) {
+			adminThereDAO.insertInfos(thereVO);
+		}
 		adminThereDAO.deleteTraffics(thereVO.getId());
-		adminThereDAO.insertTraffics(thereVO);
+		if (thereVO.getTraffics().size() > 0) {
+			adminThereDAO.insertTraffics(thereVO);
+		}
 
 		if (background != null) {
 			FileVO fileVO = new FileVO();
@@ -117,8 +121,14 @@ public class AdminThereService {
 
 		adminThereDAO.insertThere(thereVO);
 		adminThereDAO.replaceLocation(thereVO);
-		adminThereDAO.insertInfos(thereVO);
-		adminThereDAO.insertTraffics(thereVO);
+
+		if (thereVO.getAreaInfo().size() > 0) {
+			adminThereDAO.insertInfos(thereVO);
+		}
+
+		if (thereVO.getTraffics().size() > 0) {
+			adminThereDAO.insertTraffics(thereVO);
+		}
 
 		FileVO fileVO = new FileVO();
 		fileVO.setFileId(backgroundFileId);
