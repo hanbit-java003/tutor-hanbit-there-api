@@ -130,12 +130,15 @@ public class AdminThereService {
 			adminThereDAO.insertTraffics(thereVO);
 		}
 
+		String fileExt = FilenameUtils.getExtension(background.getOriginalFilename());
+		String fileName = thereVO.getId() + "." + fileExt;
+
 		FileVO fileVO = new FileVO();
 		fileVO.setFileId(backgroundFileId);
 		fileVO.setContentType(background.getContentType());
 		fileVO.setContentLength(background.getSize());
-		fileVO.setFileName(background.getOriginalFilename());
-		fileVO.setFilePath("/hanbit/webpack/hanbit-there/src/img/theres/" + thereVO.getId());
+		fileVO.setFileName(fileName);
+		fileVO.setFilePath("/hanbit/webpack/hanbit-there/src/img/theres/" + fileName);
 
 		try {
 			fileService.addFile(fileVO, background.getInputStream());
