@@ -24,6 +24,10 @@ public class FileDAO {
 		return sqlSession.insert("file.replaceFile", fileVO);
 	}
 
+	public int deleteFile(String fileId) {
+		return sqlSession.delete("file.deleteFile", fileId);
+	}
+
 }
 
 

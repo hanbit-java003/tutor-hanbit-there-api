@@ -141,6 +141,30 @@ public class AdminThereController {
 		return result;
 	}
 
+	@PostMapping("/add")
+	public Map addThere(@RequestParam("json") String json,
+			@RequestParam("background") MultipartFile background) throws Exception {
+
+		ThereVO thereVO = mapper.readValue(json, ThereVO.class);
+
+		adminThereService.addThere(thereVO, background);
+
+		Map result = new HashMap();
+		result.put("ok", true);
+
+		return result;
+	}
+
+	@DeleteMapping("/{id}")
+	public Map removeThere(@PathVariable("id") String id) {
+		adminThereService.removeThere(id);
+
+		Map result = new HashMap();
+		result.put("ok", true);
+
+		return result;
+	}
+
 }
 
 

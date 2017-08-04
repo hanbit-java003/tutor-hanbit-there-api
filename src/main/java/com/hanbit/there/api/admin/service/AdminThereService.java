@@ -73,10 +73,10 @@ public class AdminThereService {
 
 	@Transactional
 	public void modifyThere(ThereVO thereVO, MultipartFile background) {
-		String backgoundFileId = "there-" + thereVO.getId();
+		String backgroundFileId = "there-" + thereVO.getId();
 
 		if (background != null) {
-			thereVO.setBackground("/api/file/" + backgoundFileId);
+			thereVO.setBackground("/api/file/" + backgroundFileId);
 		}
 
 		adminThereDAO.updateThere(thereVO);
@@ -88,7 +88,7 @@ public class AdminThereService {
 
 		if (background != null) {
 			FileVO fileVO = new FileVO();
-			fileVO.setFileId(backgoundFileId);
+			fileVO.setFileId(backgroundFileId);
 
 			String fileExt = FilenameUtils.getExtension(background.getOriginalFilename());
 			String fileName = thereVO.getId() + "." + fileExt;
@@ -105,6 +105,50 @@ public class AdminThereService {
 				throw new RuntimeException(e);
 			}
 		}
+
+		menuService.invalidateCache();
+	}
+
+	@Transactional
+	public void addThere(ThereVO thereVO, MultipartFile background) {
+		String backgroundFileId = "there-" + thereVO.getId();
+
+		thereVO.setBackground("/api/file/" + backgroundFileId);
+
+		adminThereDAO.insertThere(thereVO);
+		adminThereDAO.replaceLocation(thereVO);
+		adminThereDAO.insertInfos(thereVO);
+		adminThereDAO.insertTraffics(thereVO);
+
+		FileVO fileVO = new FileVO();
+		fileVO.setFileId(backgroundFileId);
+		fileVO.setContentType(background.getContentType());
+		fileVO.setContentLength(background.getSize());
+		fileVO.setFileName(background.getOriginalFilename());
+		fileVO.setFilePath("/hanbit/webpack/hanbit-there/src/img/theres/" + thereVO.getId());
+
+		try {
+			fileService.addFile(fileVO, background.getInputStream());
+		}
+		catch (IOException e) {
+			throw new RuntimeException(e);
+		}
+
+		menuService.invalidateCache();
+	}
+
+	@Transactional
+	public void removeThere(String id) {
+		String backgroundFileId = "there-" + id;
+
+		adminThereDAO.deleteLocation(id);
+		adminThereDAO.deleteInfos(id);
+		adminThereDAO.deleteTraffics(id);
+		adminThereDAO.deleteThere(id);
+
+		fileService.removeFile(backgroundFileId);
+
+		menuService.invalidateCache();
 	}
 
 }

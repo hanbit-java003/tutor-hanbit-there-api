@@ -82,6 +82,18 @@ public class AdminThereDAO {
 		return sqlSession.insert("admin.there.insertTraffics", thereVO);
 	}
 
+	public int insertThere(ThereVO thereVO) {
+		return sqlSession.insert("admin.there.insertThere", thereVO);
+	}
+
+	public int deleteThere(String id) {
+		return sqlSession.delete("admin.there.deleteThere", id);
+	}
+
+	public int deleteLocation(String id) {
+		return sqlSession.delete("admin.there.deleteLocation", id);
+	}
+
 }
 
 
