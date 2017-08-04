@@ -121,6 +121,25 @@
 		</foreach>
 	</insert>
 
+	<insert id="insertThere" parameterType="thereVO">
+		INSERT INTO tbl_there
+			(id, group_id, name, name_en, timezone, background, summary)
+		VALUES
+			(#{id}, #{groupId}, #{name}, #{nameEn}, #{timezone}, #{background}, #{summary})
+	</insert>
+
+	<delete id="deleteThere" parameterType="string">
+		DELETE
+		  FROM tbl_there
+		 WHERE id = #{id}
+	</delete>
+
+	<delete id="deleteLocation" parameterType="string">
+		DELETE
+		  FROM tbl_location
+		 WHERE id = #{id}
+	</delete>
+
 </mapper>
 
 
