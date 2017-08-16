@@ -1,5 +1,6 @@
 package com.hanbit.there.api.domain;
 
+import org.springframework.data.annotation.Version;
 import org.springframework.data.couchbase.core.mapping.Document;
 
 import com.couchbase.client.java.repository.annotation.Field;
@@ -10,6 +11,8 @@ public class Airline {
 
 	@Id
 	private String key;
+	@Version
+	private long version;
 
 	@Field
 	private int id;
@@ -73,6 +76,12 @@ public class Airline {
 	}
 	public void setKey(String key) {
 		this.key = key;
+	}
+	public long getVersion() {
+		return version;
+	}
+	public void setVersion(long version) {
+		this.version = version;
 	}
 
 }
