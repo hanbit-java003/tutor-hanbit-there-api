@@ -7,6 +7,7 @@ import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.hanbit.there.api.admin.repo.AdminActivityRepository;
@@ -31,6 +32,7 @@ public class AdminActivityService {
 		return adminActivityRepository.exists(id);
 	}
 
+	@Transactional
 	public void saveActivity(Activity activity, List<MultipartFile> photos)
 		throws Exception {
 
