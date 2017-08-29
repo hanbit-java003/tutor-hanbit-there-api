@@ -3,6 +3,7 @@ package com.hanbit.there.api.service;
 import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.hanbit.there.api.dao.MemberDAO;
@@ -16,6 +17,8 @@ public class MemberService {
 
 	@Autowired
 	private MemberDAO memberDAO;
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 
 	public void signUp(MemberVO memberVO) {
 		if (memberDAO.countMember(memberVO.getEmail()) > 0) {
@@ -25,6 +28,8 @@ public class MemberService {
 		memberVO.setUid(generateUid());
 
 		// 패스워드 암호화
+		String encodedPassword = passwordEncoder.encode(memberVO.getPassword());
+		memberVO.setPassword(encodedPassword);
 
 		memberDAO.insertMember(memberVO);
 	}
