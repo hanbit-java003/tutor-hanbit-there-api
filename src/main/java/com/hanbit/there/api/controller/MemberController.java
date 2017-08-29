@@ -55,6 +55,32 @@ public class MemberController {
 		return result;
 	}
 
+	@RequestMapping("/get")
+	public Map getMember(HttpSession session) {
+		Map member = new HashMap();
+
+		if (session.getAttribute("signedIn") == null) {
+			member.put("signedIn", false);
+		}
+		else {
+			member.put("signedIn", true);
+			member.put("email", session.getAttribute("email"));
+		}
+
+		return member;
+	}
+
+	@RequestMapping("/signout")
+	public Map signOut(HttpSession session) {
+
+		session.invalidate();
+
+		Map result = new HashMap();
+		result.put("status", "ok");
+
+		return result;
+	}
+
 }
 
 
