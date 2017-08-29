@@ -17,6 +17,12 @@
 			(#{uid}, #{email}, #{password}, NOW(), #{createdBy})
 	</insert>
 
+	<select id="selectMember" parameterType="string" resultType="memberVO">
+		SELECT uid, email, password, create_dt, created_by
+		  FROM tbl_member
+		 WHERE email = #{email}
+	</select>
+
 </mapper>
 
 
