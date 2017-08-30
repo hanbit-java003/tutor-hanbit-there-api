@@ -3,6 +3,9 @@ package com.hanbit.there.api.controller;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.util.WebUtils;
 
 import com.hanbit.there.api.service.MemberService;
 import com.hanbit.there.api.vo.MemberVO;
@@ -41,9 +45,16 @@ public class MemberController {
 	public Map signIn(@RequestParam("email") String email,
 			@RequestParam("password") String password,
 			@RequestParam("remember") boolean remember,
-			HttpSession session) {
+			HttpSession session,
+			HttpServletResponse response) {
 
 		MemberVO memberVO = memberService.signIn(email, password);
+
+		if (remember) {
+			Cookie cookie = new Cookie("rid", "1234");
+			cookie.setMaxAge(600);
+			response.addCookie(cookie);
+		}
 
 		session.setAttribute("signedIn", true);
 		session.setAttribute("uid", memberVO.getUid());
@@ -71,9 +82,18 @@ public class MemberController {
 	}
 
 	@RequestMapping("/signout")
-	public Map signOut(HttpSession session) {
+	public Map signOut(HttpSession session,
+			HttpServletRequest request,
+			HttpServletResponse response) {
 
 		session.invalidate();
+
+		Cookie cookie = WebUtils.getCookie(request, "rid");
+
+		if (cookie != null) {
+			cookie.setValue(null);
+			response.addCookie(cookie);
+		}
 
 		Map result = new HashMap();
 		result.put("status", "ok");
