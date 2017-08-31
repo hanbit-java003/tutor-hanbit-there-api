@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,6 +23,8 @@ import com.hanbit.there.api.vo.MemberVO;
 @RestController
 @RequestMapping("/api/member")
 public class MemberController {
+
+	private static final Logger logger = LoggerFactory.getLogger(MemberController.class);
 
 	@Autowired
 	private MemberService memberService;
@@ -49,6 +53,8 @@ public class MemberController {
 			HttpServletResponse response) {
 
 		MemberVO memberVO = memberService.signIn(email, password);
+
+		logger.debug(email + " has signed in.");
 
 		if (remember) {
 			Cookie cookie = new Cookie("rid", "1234");
