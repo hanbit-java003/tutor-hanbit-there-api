@@ -57,6 +57,9 @@ public class ExceptionAspect {
 			if (t instanceof HanbitException) {
 				message = t.getMessage();
 			}
+			else {
+				logger.error(t.getMessage(), t);
+			}
 
 			ExceptionVO exceptionVO = new ExceptionVO(message);
 
