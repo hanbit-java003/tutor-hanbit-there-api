@@ -30,7 +30,7 @@ public class SessionAspect {
 		HttpSession session = reuqestAttributes.getRequest().getSession();
 
 		if (session.getAttribute(HanbitConstants.SIGNIN_KEY) == null) {
-			throw new HanbitException("로그인이 필요합니다.");
+			throw new HanbitException(403, "로그인이 필요합니다.");
 		}
 
 		return pjp.proceed();

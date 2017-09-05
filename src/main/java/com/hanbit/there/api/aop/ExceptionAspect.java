@@ -55,19 +55,22 @@ public class ExceptionAspect {
 			HttpServletResponse response = reuqestAttributes.getResponse();
 
 			String message = "사용자가 많아 서비스가 지연되고있습니다.";
+			ExceptionVO exceptionVO = null;
+			int statusCode = 500;
 
 			if (t instanceof HanbitException) {
-				message = t.getMessage();
+				HanbitException e = (HanbitException) t;
+				exceptionVO = new ExceptionVO(e.getErrorCode(), e.getMessage());
+				statusCode = e.getErrorCode();
 			}
 			else {
 				logger.error(t.getMessage(), t);
+				exceptionVO = new ExceptionVO(message);
 			}
-
-			ExceptionVO exceptionVO = new ExceptionVO(message);
 
 			byte[] bytes = jsonMapper.writeValueAsBytes(exceptionVO);
 
-			response.setStatus(500);
+			response.setStatus(statusCode);
 			response.setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE);
 			response.setContentLength(bytes.length);
 			response.getOutputStream().write(bytes);
