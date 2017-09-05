@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.WebUtils;
 
+import com.hanbit.there.api.HanbitConstants;
 import com.hanbit.there.api.service.MemberService;
 import com.hanbit.there.api.vo.MemberVO;
 
@@ -62,7 +63,7 @@ public class MemberController {
 			response.addCookie(cookie);
 		}
 
-		session.setAttribute("signedIn", true);
+		session.setAttribute(HanbitConstants.SIGNIN_KEY, true);
 		session.setAttribute("uid", memberVO.getUid());
 		session.setAttribute("email", memberVO.getEmail());
 
@@ -76,11 +77,11 @@ public class MemberController {
 	public Map getMember(HttpSession session) {
 		Map member = new HashMap();
 
-		if (session.getAttribute("signedIn") == null) {
-			member.put("signedIn", false);
+		if (session.getAttribute(HanbitConstants.SIGNIN_KEY) == null) {
+			member.put(HanbitConstants.SIGNIN_KEY, false);
 		}
 		else {
-			member.put("signedIn", true);
+			member.put(HanbitConstants.SIGNIN_KEY, true);
 			member.put("email", session.getAttribute("email"));
 		}
 
