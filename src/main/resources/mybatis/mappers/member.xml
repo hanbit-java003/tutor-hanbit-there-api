@@ -23,6 +23,23 @@
 		 WHERE email = #{email}
 	</select>
 
+	<resultMap id="memberDetail" type="memberVO">
+		<result property="email" column="email" />
+		<association property="detail" javaType="memberDetailVO">
+			<result property="name" column="name" />
+			<result property="phone" column="phone" />
+			<result property="info" column="info" />
+			<result property="avatar" column="avatar" />
+		</association>
+	</resultMap>
+
+	<select id="selectMemberDetail" parameterType="string" resultMap="memberDetail">
+		SELECT m.uid, email, name, phone, IFNULL(info, 'N') info, avatar
+		  FROM tbl_member m LEFT JOIN tbl_member_detail d
+		    ON m.uid = d.uid
+		 WHERE m.uid = #{uid}
+	</select>
+
 </mapper>
 
 
