@@ -46,8 +46,7 @@
 		VALUES
 			(#{uid}, #{detail.name}, #{detail.phone}, #{detail.info}, #{detail.avatar})
 		ON DUPLICATE KEY
-		UPDATE
-		   SET name = #{detail.name},
+		UPDATE name = #{detail.name},
 		       phone = #{detail.phone},
 		       info = #{detail.info},
 		       avatar = IFNULL(#{detail.avatar}, avatar)
