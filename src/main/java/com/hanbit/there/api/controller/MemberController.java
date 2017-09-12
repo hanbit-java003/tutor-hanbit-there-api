@@ -72,6 +72,10 @@ public class MemberController {
 		session.setAttribute("uid", memberVO.getUid());
 		session.setAttribute("email", memberVO.getEmail());
 
+		if (memberVO.getDetail() != null) {
+			session.setAttribute("avatar", memberVO.getDetail().getAvatar());
+		}
+
 		Map result = new HashMap();
 		result.put("email", memberVO.getEmail());
 
@@ -88,6 +92,7 @@ public class MemberController {
 		else {
 			member.put(HanbitConstants.SIGNIN_KEY, true);
 			member.put("email", session.getAttribute("email"));
+			member.put("avatar", session.getAttribute("avatar"));
 		}
 
 		return member;

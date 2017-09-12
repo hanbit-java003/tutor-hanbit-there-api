@@ -17,14 +17,17 @@
 			(#{uid}, #{email}, #{password}, NOW(), #{createdBy})
 	</insert>
 
-	<select id="selectMember" parameterType="string" resultType="memberVO">
-		SELECT uid, email, password, create_dt, created_by
-		  FROM tbl_member
+	<select id="selectMember" parameterType="string" resultMap="memberDetail">
+		SELECT m.uid, email, password, d.avatar
+		  FROM tbl_member m LEFT JOIN tbl_member_detail d
+		    ON m.uid = d.uid
 		 WHERE email = #{email}
 	</select>
 
 	<resultMap id="memberDetail" type="memberVO">
+		<result property="uid" column="uid" />
 		<result property="email" column="email" />
+		<result property="password" column="password" />
 		<association property="detail" javaType="memberDetailVO">
 			<result property="name" column="name" />
 			<result property="phone" column="phone" />
