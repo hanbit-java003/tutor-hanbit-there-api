@@ -92,7 +92,7 @@ public class MemberService {
 			fileVO.setContentType(image.getContentType());
 			fileVO.setContentLength(image.getSize());
 
-			fileService.modifyFile(fileVO, image.getInputStream());
+			fileService.modifyFile(fileVO, image.getInputStream(), 200);
 			memberVO.getDetail().setAvatar("/api/file/" + fileId);
 		}
 
